@@ -1,5 +1,0 @@
-usart3.c
-
-接收数组
-u8 Received_buff[12]={0};
-u8 Usart3_receive_count=0;
