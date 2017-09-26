@@ -1,0 +1,24 @@
+串口3中断状态机，
+case2里面把收到的数据进行了处理，存到double data_buff[8]数组;
+case3最后一个字节等于16字节数据和 除余256
+data_cnt_state状态标识符
+data_cnt_count标识高低位
+data_cnt_check校验位
+
+进入SetData(data_buff);
+
+dur
+初值dur=-1
+没有按键的话，SetData函数空跑。
+有按键中断，dur=-2000，state初值=REST，按键后改为START
+dur=DATA_LENGTH;  DATA_LENGTH = (ACTION_NUM*ACTION_TIME_TRAINING*1000) = 10*5*1000=50000
+正式进入SetData(data_buff);
+把data_buff[8]数据存到data[600][8]，
+
+数据满300个，data_full_flag置1，进入主程序
+count_temp定义=0
+count_temp=6-46, 56-96.............是不是为了把data[600][8]洗一遍，不是的，为了保证上一个窗的实时数据
+if((count_temp+3)%50>=9)。。。。。。。注释掉的话有错误，调试后找不到问题(找到了，与dur配合)还有feat_matrix[410][32]溢出，改成498
+进入feature_extraction()函数，进行特征提取
+
+window_count定义=0，当window_count==410，进行训练LDA_train(feat_matrix);
